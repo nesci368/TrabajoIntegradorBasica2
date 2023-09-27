@@ -1,16 +1,62 @@
 package ar.edu.unlam.pb;
 
+import java.util.Set; 
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Materia {
-	
-	private String nombreMateria;
-	private String codigoMateria;
-	private Double nota;
-	
-	public Materia(String nombreMateria, String codigoMateria, Double nota) {
-		
-		this.nombreMateria = nombreMateria;
-		this.codigoMateria = codigoMateria;
-		this.nota = 0.0;
+    private String codigoMateria;
+    private Double nota;
+    private String nombreMateria;
+    private List<String> correlativasRequeridas;
+
+    public Materia(String nombreMateria, String codigoMateria, Double nota) {
+    	this.nombreMateria = nombreMateria;
+        this.codigoMateria = codigoMateria;
+        this.correlativasRequeridas = new ArrayList<>();
+        this.nota = 0.0;
+    }
+
+    public Materia(String codigoDeMateria) {
+    	this.codigoMateria = codigoDeMateria;
+	}
+
+	public String getCodigoMateria() {
+        return codigoMateria;
+    }
+
+    public void setCodigoMateria(String codigoMateria) {
+        this.codigoMateria = codigoMateria;
+    }
+
+    public void agregarCorrelativa(String codigoCorrelativa) {
+        correlativasRequeridas.add(codigoCorrelativa);
+    }
+
+    public List<String> getCorrelativasRequeridas() {
+        return correlativasRequeridas;
+    }
+
+    public boolean eliminarCorrelativa(String codigoCorrelativa) {
+        return correlativasRequeridas.remove(codigoCorrelativa);
+    }
+
+    @Override
+    public String toString() {
+        return "Materia [codigoMateria=" + codigoMateria + ", correlativasRequeridas=" + correlativasRequeridas + "]";
+    }
+
+	public Double getNota() {
+		return nota;
+	}
+
+	public void setNota(Double nota) {
+		this.nota = nota;
+	}
+
+	public void setCorrelativasRequeridas(List<String> correlativasRequeridas) {
+		this.correlativasRequeridas = correlativasRequeridas;
 	}
 
 	public String getNombreMateria() {
@@ -20,23 +66,8 @@ public class Materia {
 	public void setNombreMateria(String nombreMateria) {
 		this.nombreMateria = nombreMateria;
 	}
-
-	public String getCodigoMateria() {
-		return codigoMateria;
-	}
-
-	public void setCodigoMateria(String codigoMateria) {
-		this.codigoMateria = codigoMateria;
-	}
-
-	public Double getNota() {
-		return nota;
-	}
-
-	public void setNota(Double nota) {
-		this.nota = nota;
-	}
 	
 	
-
+    
+    
 }
