@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-
 public class TestUniversidad {
 
 	@Test
@@ -33,6 +32,17 @@ public class TestUniversidad {
 
 	    Alumno alumno2 = new Alumno("Leandro", "Nesci", 36954744);
 	    assertFalse(universidad.agregarAlumno(alumno2));
+	}
+	
+	@Test
+	public void testAgregarMateria() {
+	    Universidad universidad = new Universidad("UNLaM"); // Crear una universidad
+
+	    // Agregar 20 materias diferentes
+	    for (int i = 1; i <= 20; i++) {
+	        Materia materia = new Materia("Programacion Basica 1", "2619" + i, 6.0);
+	        assertTrue(universidad.agregarMateria(materia));
+	    }
 	}
 
 }
