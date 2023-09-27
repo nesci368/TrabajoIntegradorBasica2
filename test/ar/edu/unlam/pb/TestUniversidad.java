@@ -24,5 +24,15 @@ public class TestUniversidad {
 	        assertTrue(universidad.agregarAlumno(alumno));
 	    }
 	}
+	
+	@Test
+	public void testNoAgregarAlumnoRepetido() {
+	    Universidad universidad = new Universidad("UNLaM"); // Crear una universidad
+	    Alumno alumno1 = new Alumno("Leandro", "Nesci", 36954744);
+	    assertTrue(universidad.agregarAlumno(alumno1));
+
+	    Alumno alumno2 = new Alumno("Leandro", "Nesci", 36954744);
+	    assertFalse(universidad.agregarAlumno(alumno2));
+	}
 
 }
