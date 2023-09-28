@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -299,6 +300,75 @@ public class TestUniversidad {
 
 	    assertTrue(universidad.tieneMateriasAprobadas(materiaAprobada, comision));
 	}
+	
+	
+	@Test
+    public void testObtenerListadoMateriasAprobadasParaUnAlumno() {
+		 Alumno alumno1 = new Alumno("Leandro", "Nesci", 36954744);
+		 Alumno alumno2= new Alumno("Vanesa", "Hermosilla", 34571945);
+		 Universidad universidad = new Universidad("UNLaM");
+		 
+        List<String> listado = universidad.obtenerListadoMateriasAprobadasParaUnAlumno(222);
+        assertEquals(1, listado.size());
+        assertTrue(listado.get(0).contains("222 Juan Perez PB2 7.0"));
+
+        listado = universidad.obtenerListadoMateriasAprobadasParaUnAlumno(444);
+        assertEquals(1, listado.size());
+        assertTrue(listado.get(0).contains("444 Lucia Garcia PB2 7.0"));
+    }
+
+    @Test
+    public void testObtenerMateriasQueFaltanCursarParaUnAlumno() {
+    	
+    	Universidad universidad = new Universidad("UNLaM");
+    	Alumno alumno1 = new Alumno("Leandro", "Nesci", 36954744);
+    	 Materia materia1 = new Materia("Programacion Basica 2", "2623", 7.0);
+        alumno1.aprobarMateria(materia1);
+        
+        List<String> materiasFaltantes = universidad.obtenerMateriasQueFaltanCursarParaUnAlumno(222);
+        assertEquals(1, materiasFaltantes.size());
+        assertTrue(materiasFaltantes.contains("PB1"));
+        
+        materiasFaltantes = universidad.obtenerMateriasQueFaltanCursarParaUnAlumno(444);
+        assertEquals(2, materiasFaltantes.size());
+        assertTrue(materiasFaltantes.contains("PB1"));
+        assertTrue(materiasFaltantes.contains("PB2"));
+    }
+
+    @Test
+    public void testObtenerReporteDeNotasDeAlumnosDeCurso() {
+    	
+    	LocalDate fechaInicioInscripcion = LocalDate.of(2023, 03, 31);
+		LocalDate fechaFinalInscripcion = LocalDate.of(2023, 04, 10);
+		String dia = "Lunes";
+		String horario = "19:00hs";
+		Integer notaAprobacion = 5;
+		Integer capacidad = 40;
+		String tipoNota = "Final";
+    	
+    	
+    	Universidad universidad = new Universidad("UNLaM");
+        Curso curso = new Curso(null, "Curso 1");
+    	Alumno alumno1 = new Alumno("Leandro", "Nesci", 36954744);
+		Alumno alumno2= new Alumno("Vanesa", "Hermosilla", 34571945);
+   	 	Materia materia1 = new Materia("Programacion Basica 1", "2619", 7.0);
+   	 	Materia materia2 = new Materia("Programacion Basica 2", "2623", 7.0);
+   	 	Comision comision = new Comision("C001", fechaInicioInscripcion, fechaFinalInscripcion, materia1, dia, horario,
+				capacidad, notaAprobacion);
+
+        curso.agregarAlumno(alumno1);
+        curso.agregarAlumno(alumno2);
+        curso.agregarMateria(materia1);
+        curso.agregarMateria(materia2);
+
+        alumno1.registrarNotaFinal(comision,7, tipoNota);
+        alumno2.registrarNotaFinal(comision, 7, tipoNota);
+
+        List<String> reporte = universidad.obtenerReporteDeNotasDeAlumnosDeCurso(1);
+        assertEquals(2, reporte.size());
+        assertTrue(reporte.get(0).contains("1 PB2 222 Juan Perez 7.0"));
+        assertTrue(reporte.get(1).contains("1 PB2 444 Lucia Garcia 7.0"));
+    }
 
 
 }

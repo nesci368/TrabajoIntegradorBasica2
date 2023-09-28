@@ -16,7 +16,7 @@ public class Alumno {
 	private List<String> correlativasAprobadas;
 	private List<String> materiasConNota;
 	private List<Nota> notas;
-	private List<Materia> materiasAprobada;
+	private List<Materia> materiaAprobadas;
 
 	public Alumno(String nombre, String apellido, Integer dni) {
 		this.nombre = nombre;
@@ -26,8 +26,8 @@ public class Alumno {
 		this.materiasAprobadas = new HashSet<>();
 		this.correlativasAprobadas = new ArrayList<>();
 		this.materiasConNota = new ArrayList<>();
-		this.setNotas(new ArrayList<>());
-		this.setMateriasAprobada(new ArrayList<>());
+		this.notas = new ArrayList<>();
+		this.materiaAprobadas = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -68,9 +68,16 @@ public class Alumno {
 		correlativasAprobadas.add(correlativa);
 	}
 
-	public Set<String> getMateriasAprobadas() {
-		return materiasAprobadas;
-	}
+	 public List<Materia> getMateriasAprobadas() {
+	        List<Materia> materiasAprobadas = new ArrayList<>();
+	        for (String codigoMateria : materiasAprobadas) {
+	            Materia materia = buscarMateriaPorCodigo(codigoMateria);
+	            if (materia != null) {
+	                materiasAprobadas.add(materia);
+	            }
+	        }
+	        return materiasAprobadas;
+	    }
 
 	public List<Comision> getComisionesInscriptas() {
 		return comisionesInscriptas;
@@ -209,11 +216,40 @@ public class Alumno {
 	}
 
 	public List<Materia> getMateriasAprobada() {
-		return materiasAprobada;
+		return materiaAprobadas;
 	}
 
 	public void setMateriasAprobada(List<Materia> materiasAprobada) {
-		this.materiasAprobada = materiasAprobada;
+		this.materiaAprobadas = materiasAprobada;
 	}
+	
+	public String obtenerCicloLectivoDeMateriaAprobada(String codigoMateria) {
+        for (Materia materiaAprobada : materiaAprobadas) {
+            if (materiaAprobada.getCodigoMateria().equals(codigoMateria)) {
+                // Si encontramos la materia, devolvemos su ciclo lectivo.
+                return materiaAprobada.getCicloLectivo();
+            }
+        }
 
+        // Si no se encontró la materia, devolvemos null o un valor indicativo de que no se encontró.
+        return null;
+    }
+	
+	public boolean tieneMateriaAprobada(Materia materia) {
+        for (Materia materiaAprobada : materiaAprobadas) {
+            if (materiaAprobada.equals(materia)) {
+                return true;
+            }
+        }
+        return false;
+    }
+	
+	public Double obtenerNotaPorMateria(String codigoMateria) {
+        for (Nota nota : notas) {
+            if (nota.getMateria().getCodigoMateria().equals(codigoMateria)) {
+                return (double) nota.getValor();
+            }
+        }
+        return null; // Retorna null si no se encuentra la nota para la materia
+    }
 }

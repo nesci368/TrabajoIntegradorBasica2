@@ -4,6 +4,7 @@ public class Nota {
     private Alumno alumno;
     private String tipoNota;
     private int nota;
+    private Materia materia;
 
     public Nota(Alumno alumno, String tipoNota, int nota) {
         this.alumno = alumno;
@@ -30,6 +31,14 @@ public class Nota {
 	public int getValor() {
 		
 		return 0;
+	}
+
+	public Materia getMateria() {
+		return materia;
+	}
+
+	public void setMateria(Materia materia) {
+		this.materia = materia;
 	}
 }
 
