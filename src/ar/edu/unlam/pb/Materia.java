@@ -1,7 +1,5 @@
 package ar.edu.unlam.pb;
 
-import java.util.Set; 
-import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +8,13 @@ public class Materia {
     private Double nota;
     private String nombreMateria;
     private List<String> correlativasRequeridas;
+    private List <Materia> correlativas;
 
     public Materia(String nombreMateria, String codigoMateria, Double nota) {
     	this.nombreMateria = nombreMateria;
         this.codigoMateria = codigoMateria;
         this.correlativasRequeridas = new ArrayList<>();
+        this.correlativas = new ArrayList<>();
         this.nota = 0.0;
     }
 
@@ -66,7 +66,13 @@ public class Materia {
 	public void setNombreMateria(String nombreMateria) {
 		this.nombreMateria = nombreMateria;
 	}
-	
+	public boolean agregarCorrelativa(Materia materia) {
+	    return correlativas.add(materia);
+	}
+
+	public List<Materia> getCorrelativas() {
+	    return correlativas;
+	}
 	
     
     

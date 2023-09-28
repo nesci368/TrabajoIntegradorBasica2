@@ -247,5 +247,12 @@ public class Universidad {
 
 		return true;
 	}
+	
+	public boolean registrarMateria(Materia materia) {
+	    return materias.add(materia);
+	}
+	
+	
+
 
 }

@@ -1,10 +1,13 @@
 package ar.edu.unlam.pb;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*; 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.junit.Test;
+
+
 
 public class TestUniversidad {
 
@@ -53,6 +56,57 @@ public class TestUniversidad {
 
 		Materia materia2 = new Materia("Programacion Basica 1", "2619", 7.0);
 		assertFalse(universidad.agregarMateria(materia2));
+	}
+	
+	@Test
+	public void queSePuedaAsociarUnaMateriaCorrelativaAOtraMateria() {
+		String  nombre = "Unlam";
+    	Universidad unlam = new Universidad (nombre);
+    	
+    	nombre = "PB1";
+        Integer codigo = 1;
+		Materia materia1 = new Materia("Programacion Basica 1", "2619", 7.0);
+
+		Materia materia2 = new Materia("Programacion Basica 2", "2623", 8.0);
+        unlam.registrarMateria(materia1);
+        
+        nombre = "PB2";
+        codigo = 2;
+        ArrayList<Materia> correlativas = new ArrayList<>();
+        correlativas.add(materia2);
+		
+
+        
+        materia2.agregarCorrelativa(materia1);
+        unlam.registrarMateria(materia2);
+        
+        ArrayList<Materia> correlativas2 = (ArrayList<Materia>) materia2.getCorrelativas();
+        
+        assertTrue(correlativas2.contains(materia1));
+	}
+	
+	@Test
+	public void queNoSePuedaAsociarUnaMateriaCorrelativaAOtraMateriaPorqueYaExiste() {
+		String  nombre = "Unlam";
+    	Universidad unlam = new Universidad (nombre);
+    	
+    	nombre = "PB1";
+        Integer codigo = 1;
+		Materia materia1 = new Materia("Programacion Basica 1", "2619", 7.0);
+
+        
+        unlam.registrarMateria(materia1);
+        
+        nombre = "PB2";
+        codigo = 2;
+        ArrayList<Materia> correlativas = new ArrayList<>();
+        
+		Materia materia2 = new Materia("Programacion Basica 2", "2623", 8.0);
+		correlativas.add(materia2);
+        
+		materia2.agregarCorrelativa(materia1);
+        assertFalse(materia2.agregarCorrelativa(materia1));
+        
 	}
 
 	@Test
@@ -219,32 +273,32 @@ public class TestUniversidad {
 
 	@Test
 	public void testAprobarMateria() {
-		Universidad universidad = new Universidad("UNLaM"); // Crear una universidad
-		Alumno alumno = new Alumno("Leandro", "Nesci", 36954744);
-		assertTrue(universidad.agregarAlumno(alumno));
+	    Universidad universidad = new Universidad("UNLaM");
+	    Alumno alumno = new Alumno("Leandro", "Nesci", 36954744);
+	    assertTrue(universidad.agregarAlumno(alumno));
 
-		Materia materia = new Materia("Programacion Basica 1", "2619", 7.0);
-		assertTrue(universidad.agregarMateria(materia));
+	    Materia materia = new Materia("Programacion Basica 1", "2619", 7.0);
+	    assertTrue(universidad.agregarMateria(materia));
 
-		LocalDate fechaInicioInscripcion = LocalDate.of(2023, 03, 31);
-		LocalDate fechaFinalInscripcion = LocalDate.of(2023, 04, 10);
-		String dia = "Lunes";
-		String horario = "19:00hs";
-		Integer notaAprobacion = 5;
-		Integer capacidad = 40;
+	    LocalDate fechaInicioInscripcion = LocalDate.of(2023, 03, 31);
+	    LocalDate fechaFinalInscripcion = LocalDate.of(2023, 04, 10);
+	    String dia = "Lunes";
+	    String horario = "19:00hs";
+	    Integer notaAprobacion = 5;
+	    Integer capacidad = 40;
 
-		
-		Comision comision = new Comision("C001", fechaInicioInscripcion, fechaFinalInscripcion, materia, dia, horario,
-				notaAprobacion, capacidad);
-		assertTrue(universidad.agregarComision(comision));
+	    Comision comision = new Comision("C001", fechaInicioInscripcion, fechaFinalInscripcion, materia, dia, horario,
+	            notaAprobacion, capacidad);
+	    assertTrue(universidad.agregarComision(comision));
 
-		assertTrue(universidad.inscribirAlumnoALaComision(alumno, comision.getId(), LocalDate.now(), 7));
+	    assertTrue(universidad.inscribirAlumnoALaComision(alumno, comision.getId(), LocalDate.now(), 7));
 
-		Materia materiaAprobada = new Materia("Programacion Basica 1", "2619", 7.0);
+	    Materia materiaAprobada = new Materia("Programacion Basica 1", "2619", 7.0);
 
-		alumno.aprobarMateria(materiaAprobada);
+	    alumno.aprobarMateria(materiaAprobada);
 
-		assertTrue(universidad.tieneMateriasAprobadas(materiaAprobada, comision));
+	    assertTrue(universidad.tieneMateriasAprobadas(materiaAprobada, comision));
 	}
+
 
 }
